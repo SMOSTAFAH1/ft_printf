@@ -29,7 +29,7 @@ BONUSOBJ    = $(BONUSSRC:.c=.o)
 
 # Compilador y flags
 CC          = cc
-CCFLAGS     = -Wall -Wextra -Werror -I$(LIBFT_DIR)
+CCFLAGS     = -Wall -Wextra -Werror
 
 # Comando para crear la librería
 AR          = ar rcs
@@ -44,7 +44,7 @@ $(NAME): $(OBJ)
 
 # Crear los archivos objetos
 %.o: %.c
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -I$(LIBFT_DIR) -c $< -o $@
 
 # Incluir la librería libft
 $(LIBFT):
