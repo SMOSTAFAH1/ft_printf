@@ -9,12 +9,13 @@
 #   Updated: 2024-09-25 06:19:00 by shashemi         ###   ########.fr       #
 #                                                                            #
 # ************************************************************************** #
+
 # Nombre del ejecutable o librería a crear
 NAME        = libftprintf.a
 
 # Archivos fuente
-SRC         = file1.c file2.c   # Aquí agregas tus archivos .c
-BONUSSRC    = bonus1.c bonus2.c # Aquí agregas tus archivos de bonus, si los tienes
+SRC         = 
+BONUSSRC    = 
 
 # Directorio de la biblioteca libft
 LIBFT_DIR   = ./libft
@@ -40,7 +41,6 @@ all: $(LIBFT) $(NAME)
 # Crear la librería libftprintf.a
 $(NAME): $(OBJ)
 	@$(AR) $(NAME) $(OBJ)
-	@echo "Created $(NAME)"
 
 # Crear los archivos objetos
 %.o: %.c
@@ -66,7 +66,6 @@ re: fclean all
 # Recompilar con los bonus
 bonus: $(LIBFT) $(OBJ) $(BONUSOBJ)
 	@$(AR) $(NAME) $(OBJ) $(BONUSOBJ)
-	@echo "Created $(NAME) with bonuses"
 
 rebonus: fclean bonus
 
