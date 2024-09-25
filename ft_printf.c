@@ -9,14 +9,8 @@
 /*   Updated: 2024-09-25 07:10:11 by shashemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "ft_printf.h"
 
-/// @brief Auxiliar function to parse_format, treating the cases of 
-/// %d, %i, %u, %x, %X and %p format specifiers
-/// @param format String with the format specifier
-/// @param argptr Pointer to the arguments list
-/// @param count Pointer to the counter of printed characters
 static void	parse_format2(char const *format, va_list argptr, int *count)
 {
 	char	aux;
@@ -40,12 +34,6 @@ static void	parse_format2(char const *format, va_list argptr, int *count)
 	}
 }
 
-/// @brief Function to parse the format specifier and 
-/// call the corresponding function to print the argument
-/// it treats the cases of %%, %c and %s format specifiers
-/// @param format String with the format specifier
-/// @param argptr Pointer to the arguments list
-/// @param count Pointer to the counter of printed characters
 static void	parse_format(char const *format, va_list argptr, int *count)
 {
 	unsigned long long	addr;
