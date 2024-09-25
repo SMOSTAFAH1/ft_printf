@@ -14,7 +14,7 @@
 NAME        = libftprintf.a
 
 # Archivos fuente
-SRC         = 
+SRC         = ft_printf.c utils.c
 BONUSSRC    = 
 
 # Directorio de la biblioteca libft
