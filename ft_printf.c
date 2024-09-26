@@ -87,4 +87,3 @@ int	ft_printf(char const *format, ...)
 	}
 	return (va_end(argptr), count);
 }
-
