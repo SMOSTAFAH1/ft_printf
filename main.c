@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shashemi <shashemi@student.42madrid.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-09-25 07:09:17 by shashemi          #+#    #+#             */
-/*   Updated: 2024-09-25 07:09:17 by shashemi         ###   ########.fr       */
+/*   Created: 2024-09-28 07:49:20 by shashemi          #+#    #+#             */
+/*   Updated: 2024-09-28 07:49:20 by shashemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "libft/libft.h"
-# include <unistd.h>
-# include <stdarg.h>
+#include "ft_printf.h"
 
-int		ft_printf(char const *format, ...);
-void	ft_printnbr(int n, int *count);
-void	ft_printuns(unsigned int nbr, int *count);
-void	ft_printhexa(unsigned long long nbr, const char *base, int *count);
-void	ft_printstr(char *str, int *count);
-
-#endif
+int	main(void)
+{
+	ft_printf("Hello, %s!\n", "World");
+	ft_printf("Hello, %s!\n", "World");
+	ft_printf("%d\n", 0);
+	ft_printf("%c\n", 'A');
+	ft_printf("%s\n", "Hola");
+	ft_printf("%p\n", (void *)0x12345678);
+	ft_printf("%d\n", 123);
+	ft_printf("%i\n", -123);
+	ft_printf("%u\n", 123);
+	ft_printf("%x\n", 123);
+	ft_printf("%X\n", 123);
+	return (0);
+}
