@@ -11,54 +11,38 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static void	print_number_base(unsigned long long nbr, const char *base,
-				int base_len, int *count)
+void	print_base(unsigned long long n, char *base, int base_len, int *count)
 {
-	char	buffer[65];
-	int		i;
+	char	number;
 
-	i = 64;
-	buffer[i] = '\0';
-	if (nbr == 0)
-		buffer[--i] = base[0];
-	while (nbr)
+	if (n >= (unsigned long long)base_len)
+		print_base(n / base_len, base, base_len, count);
+	number = base[n % base_len];
+	*count += write(1, &number, 1);
+}
+
+void	ft_putnbr(int nbr, int *count)
+{
+	long long int	n;
+
+	n = nbr;
+	if (n < 0)
 	{
-		buffer[--i] = base[nbr % base_len];
-		nbr /= base_len;
+		*count += write(1, "-", 1);
+		n = -n;
 	}
-	*count += write(1, &buffer[i], 64 - i);
+	if (n >= 10)
+		ft_putnbr(n / 10, count);
+	*count += write(1, &"0123456789"[n % 10], 1);
 }
 
-void	ft_printnbr(int n, int *count)
+void	ft_putstr(char *str, int *count)
 {
-	int	len_before;
-
-	len_before = *count;
-	ft_putnbr_fd(n, 1);
-	*count += (*count - len_before);
-}
-
-void	ft_printuns(unsigned int nbr, int *count)
-{
-	print_number_base(nbr, "0123456789", 10, count);
-}
-
-void	ft_printhexa(unsigned long long nbr, const char *base, int *count)
-{
-	print_number_base(nbr, base, 16, count);
-}
-
-void	ft_printstr(char *str, int *count)
-{
-	int	len;
-
-	len = 0;
 	if (!str)
 	{
 		*count += write(1, "(null)", 6);
 		return ;
 	}
-	len = ft_strlen(str);
-	ft_putstr_fd(str, 1);
-	*count += len;
+	while (*str)
+		*count += write(1, str++, 1);
 }

@@ -11,14 +11,14 @@
 # ************************************************************************** #
 NAME        = libftprintf.a
 
-SRC         = ft_printf.c utils.c ft_putnbr_fd.c ft_strlen.c ft_putstr_fd.c
+SRC         = ft_printf.c utils.c
 BONUSSRC    = 
 
 OBJ         = $(SRC:.c=.o)
 BONUSOBJ    = $(BONUSSRC:.c=.o)
 
 CC          = cc
-CCFLAGS     = -Wall -Wextra -Werror
+CFLAGS     = -Wall -Wextra -Werror
 
 AR          = ar rcs
 RM          = rm -f
@@ -32,7 +32,7 @@ bonus: $(OBJ) $(BONUSOBJ)
 	@$(AR) $(NAME) $(OBJ) $(BONUSOBJ)
 
 %.o: %.c
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ) $(BONUSOBJ)
@@ -41,7 +41,5 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
-
-rebonus: fclean bonus
 
 .PHONY: all clean fclean re bonus rebonus

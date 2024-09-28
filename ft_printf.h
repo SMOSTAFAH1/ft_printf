@@ -15,12 +15,8 @@
 # include <stdarg.h>
 
 int		ft_printf(char const *format, ...);
-void	ft_printnbr(int n, int *count);
-void	ft_printuns(unsigned int nbr, int *count);
-void	ft_printhexa(unsigned long long nbr, const char *base, int *count);
-void	ft_printstr(char *str, int *count);
-void	ft_putnbr_fd(int nb, int fd);
-void	ft_putstr_fd(char *s, int fd);
-size_t	ft_strlen(const char *s);
+void	ft_putnbr(int nbr, int *count);
+void	print_base(unsigned long long n, char *base, int base_len, int *count);
+void	ft_putstr(char *str, int *count);
 
 #endif

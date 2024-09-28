@@ -14,7 +14,6 @@
 int	main(void)
 {
 	ft_printf("Hello, %s!\n", "World");
-	ft_printf("Hello, %s!\n", "World");
 	ft_printf("%d\n", 0);
 	ft_printf("%c\n", 'A');
 	ft_printf("%s\n", "Hola");

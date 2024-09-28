@@ -11,42 +11,24 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static void	parse_format2(char const *format, va_list argptr, int *count)
+static void	handle_char(char const *format, va_list argptr, int *count)
 {
-	char	aux;
+	int	aux;
 
-	if (*format == 'd' || *format == 'i')
-		ft_printnbr(va_arg(argptr, int), count);
-	else if (*format == 'u')
-		ft_printuns(va_arg(argptr, unsigned int), count);
-	else if (*format == 'x')
-		ft_printhexa((unsigned long long)
-			va_arg(argptr, unsigned int), "0123456789abcdef", count);
-	else if (*format == 'X')
-		ft_printhexa((unsigned long long)
-			va_arg(argptr, unsigned int), "0123456789ABCDEF", count);
-	else
-	{
-		if (*format != '%')
-			--format;
-		aux = '%';
-		*count += write(1, &aux, 1);
-	}
-}
-
-static void	parse_format(char const *format, va_list argptr, int *count)
-{
-	unsigned long long	addr;
-	int					aux;
-
-	if (*format == 's')
-		ft_printstr(va_arg(argptr, char *), count);
-	else if (*format == 'c')
+	if (*format == 'c')
 	{
 		aux = va_arg(argptr, int);
 		*count += write(1, &aux, 1);
 	}
-	else if (*format == 'p')
+	else if (*format == 's')
+		ft_putstr(va_arg(argptr, char *), count);
+}
+
+static void	handle_pointer(char const *format, va_list argptr, int *count)
+{
+	unsigned long long	addr;
+
+	if (*format == 'p')
 	{
 		addr = va_arg(argptr, unsigned long long);
 		if (addr == 0)
@@ -55,35 +37,50 @@ static void	parse_format(char const *format, va_list argptr, int *count)
 			return ;
 		}
 		*count += write(1, "0x", 2);
-		ft_printhexa(addr, "0123456789abcdef", count);
+		print_base(addr, "0123456789abcdef", 16, count);
 	}
-	else
-		parse_format2(format, argptr, count);
+}
+
+static void	handle_numbers(char const *format, va_list argptr, int *count)
+{
+	if (*format == 'd' || *format == 'i')
+		ft_putnbr(va_arg(argptr, int), count);
+	else if (*format == 'u')
+		print_base(va_arg(argptr, unsigned int), "0123456789", 10, count);
+	else if (*format == 'x')
+		print_base(va_arg(argptr, unsigned int), "0123456789abcdef", 16, count);
+	else if (*format == 'X')
+		print_base(va_arg(argptr, unsigned int), "0123456789ABCDEF", 16, count);
+}
+
+static void	parse_format(char const *format, va_list argptr, int *count)
+{
+	if (*format == 'c' || *format == 's')
+		handle_char(format, argptr, count);
+	else if (*format == 'p')
+		handle_pointer(format, argptr, count);
+	else if (*format == 'd' || *format == 'i' || *format == 'u'
+		|| *format == 'x' || *format == 'X')
+		handle_numbers(format, argptr, count);
+	else if (*format == '%')
+		*count += write(1, "%", 1);
 }
 
 int	ft_printf(char const *format, ...)
 {
 	int		count;
-	int		flag;
 	va_list	argptr;
 
 	count = 0;
 	va_start(argptr, format);
 	while (*format)
 	{
-		flag = count;
 		if (*format == '%' && *(format + 1))
-		{
-			++format;
-			parse_format(format, argptr, &count);
-		}
+			parse_format(++format, argptr, &count);
 		else
-		{
 			count += write(1, format, 1);
-		}
-		if (flag > count)
-			return (va_end(argptr), -1);
 		++format;
 	}
-	return (va_end(argptr), count);
+	va_end(argptr);
+	return (count);
 }
